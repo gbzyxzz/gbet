@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gb.bet - Cassino Online</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #003366;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  header {
+    background-color: #002244;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  header .logo {
+    font-size: 2em;
+    color: #00aaff;
+    font-weight: bold;
+  }
+
+  header nav a {
+    color: #fff;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: color 0.3s;
+  }
+
+  header nav a:hover {
+    color: #00aaff;
+  }
+
+  .banner {
+    background: url('https://via.placeholder.com/1200x400/0077cc/fff?text=Promoções+gb.bet') center/cover no-repeat;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .banner h1 {
+    font-size: 3em;
+    color: #00aaff;
+  }
+
+  .btn {
+    background-color: #0077cc;
+    color: #fff;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .btn:hover {
+    background-color: #005fa3;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    background-color: #002244;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .modal h2 {
+    margin-bottom: 20px;
+    color: #00aaff;
+  }
+
+  .modal input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #b0c4de;
+  }
+
+  .modal button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0077cc;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+  }
+
+  .modal button:hover {
+    background-color: #005fa3;
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+    font-size: 2em;
+    cursor: pointer;
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .tabs button {
+    background: none;
+    border: 2px solid #00aaff;
+    color: #00aaff;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .tabs button.active {
+    background-color: #00aaff;
+    color: #fff;
+  }
+
+  .form-container {
+    display: none;
+  }
+
+  .form-container.active {
+    display: block;
+  }
+
+  .games-section {
+    padding: 40px;
+    text-align: center;
+    background-color: #004080;
+  }
+
+  .games-section h2 {
+    font-size: 2em;
+    color: #00aaff;
+    margin-bottom: 20px;
+  }
+
+  .game-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .game-card {
+    background-color: #0077cc;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 8px;
+    width: 200px;
+    text-align: center;
+  }
+
+  .game-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .game-card p {
+    color: #fff;
+    margin-top: 10px;
+    font-size: 1.2em;
+  }
+
+  .back-btn {
+    background-color: #00aaff;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+  .back-btn:hover {
+    background-color: #0088cc;
+  }
+</style>
+
+<body>
+
+  <!-- Cabeçalho -->
+<header>
+  <div class="logo">gb.bet</div>
+  <nav>
+    <a href="#" id="logoutBtn" class="logout-link" style="display: none;">Logout</a>
+  </nav>
+</header>
+
+  <!-- Banner Principal -->
+  <section class="banner">
+    <h1>Bem-vindo ao gb.bet</h1>
+    <button class="btn" id="openModalBtn2">Acesse Sua Conta</button> <!-- Novo botão -->
+    <button class="btn" id="openGamesBtn">Jogos</button> <!-- Novo botão de jogos -->
+  </section>
+
+  <!-- Modal de Login -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <span class="close" id="closeModalBtn">&times;</span>
+      
+      <!-- Abas de Login e Registro -->
+      <div class="tabs">
+        <button id="loginTab" class="active">Login</button>
+        <button id="registerTab">Registro</button>
+      </div>
+
+      <!-- Formulário de Login -->
+      <div class="form-container active" id="loginForm">
+        <h2>Login</h2>
+        <form id="loginFormSubmit">
+          <input type="text" id="username" placeholder="Usuário" required />
+          <input type="password" id="password" placeholder="Senha" required />
+          <button type="submit">Entrar</button>
+        </form>
+      </div>
+
+      <!-- Formulário de Registro -->
+      <div class="form-container" id="registerForm">
+        <h2>Registro</h2>
+        <form id="registerFormSubmit">
+          <input type="text" id="newUsername" placeholder="Usuário" required />
+          <input type="email" id="email" placeholder="E-mail" required />
+          <input type="password" id="newPassword" placeholder="Senha" required />
+          <button type="submit">Criar Conta</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seção de Jogos -->
+  <section class="games-section" id="gamesSection" style="display: none;">
+    <h2>Jogos da PG Soft</h2>
+    <div class="game-cards">
+      <!-- Fortune Tiger da PG Soft -->
+      <div class="game-card">
+        <img src="https://via.placeholder.com/200x150/8a2be2/fff?text=Fortune+Tiger" alt="Fortune Tiger" />
+        <p>Fortune Tiger</p>
+      </div>
+      <div class="game-card">
+        <img src="https://via.placeholder.com/200x150/8a2be2/fff?text=Jogo+2" alt="Jogo 2" />
+        <p>Jogo 2</p>
+      </div>
+      <div class="game-card">
+        <img src="https://via.placeholder.com/200x150/8a2be2/fff?text=Jogo+3" alt="Jogo 3" />
+        <p>Jogo 3</p>
+      </div>
+    </div>
+    <button class="back-btn" id="backToHomeBtn">Voltar para a Página Inicial</button> <!-- Botão de voltar -->
+  </section>
+
+  <script>
+    // Variáveis
+    const openModalBtn = document.getElementById("openModalBtn");
+    const openModalBtn2 = document.getElementById("openModalBtn2");
+    const openGamesBtn = document.getElementById("openGamesBtn");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const loginModal = document.getElementById("loginModal");
+    const loginTab = document.getElementById("loginTab");
+    const registerTab = document.getElementById("registerTab");
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+    const gamesSection = document.getElementById("gamesSection");
+    const loginFormSubmit = document.getElementById("loginFormSubmit");
+    const registerFormSubmit = document.getElementById("registerFormSubmit");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const backToHomeBtn = document.getElementById("backToHomeBtn");
+
+    // Função para abrir o modal
+    const openModal = () => {
+      loginModal.style.display = "flex";
+    };
+
+    // Função para fechar o modal
+    const closeModal = () => {
+      loginModal.style.display = "none";
+    };
+
+    // Alternar para o formulário de Login
+    const showLoginForm = () => {
+      loginTab.classList.add("active");
+      registerTab.classList.remove("active");
+      loginForm.classList.add("active");
+      registerForm.classList.remove("active");
+    };
+
+    // Alternar para o formulário de Registro
+    const showRegisterForm = () => {
+      loginTab.classList.remove("active");
+      registerTab.classList.add("active");
+      loginForm.classList.remove("active");
+      registerForm.classList.add("active");
+    };
+
+    // Abrir o modal ao clicar no botão "Acesse Sua Conta"
+    openModalBtn2.addEventListener("click", openModal);
+
+    // Fechar o modal ao clicar no "X"
+    closeModalBtn.addEventListener("click", closeModal);
+
+    // Alternar entre login e registro
+    loginTab.addEventListener("click", showLoginForm);
+    registerTab.addEventListener("click", showRegisterForm);
+
+    // Mostrar a seção de Jogos ao clicar no botão "Jogos"
+    openGamesBtn.addEventListener("click", () => {
+      gamesSection.style.display = "block";
+    });
+
+    // Voltar para a página inicial
+    backToHomeBtn.addEventListener("click", () => {
+      gamesSection.style.display = "none";
+    });
+  </script>
+
+</body>
+</html>
